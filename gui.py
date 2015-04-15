@@ -1,5 +1,6 @@
 # Simple enough, just import everything from tkinter.
 from tkinter import *
+import math
 
 
 # Here, we are creating our class, Window, and inheriting from the Frame
@@ -40,17 +41,30 @@ class Window(Frame):
         file.add_command(label="Repaint", command=self.client_repaint)
 
         #added "file" to our menu
-        menu.add_cascade(label="Menu", menu=file)
+        menu.add_cascade(label="Draw", menu=file)
 
-        canvas=Canvas(self.master, width=500, height=500)
-        canvas.pack()
-        canvas.create_line(0,0,200,100)
+        self.canvas=Canvas(self.master, width=500, height=500)
+        self.canvas.pack()
 
     def client_exit(self):
         exit()
     def client_repaint(self):
-        print("draw")
+        self.canvas.create_line(250, 500, 250, 500-128)
+        self.draw(self.canvas, 250, 500-128, 128*0.8, 90, 2) 
 
+    def draw(self, Canvas, x, y, length, direction, depth):
+        print(direction)
+        if depth==0: #base case
+            return
+        end_x = x - length * abs(math.cos(math.radians(direction+30)))
+        end_y = y - length * abs(math.sin(math.radians(direction+30)))
+        self.canvas.create_line(x,y, end_x, end_y)
+        self.draw(self.canvas, end_x, end_y, length*0.8, direction+30, depth-1) 
+
+        end_x = x + length * abs(math.cos(math.radians(direction-30)))
+        end_y = y - length * abs(math.sin(math.radians(direction-30)))
+        self.canvas.create_line(x,y, end_x, end_y)
+        self.draw(self.canvas, end_x, end_y, length*0.8, direction-30, depth-1) 
 root = Tk()
 root.geometry("500x500")
 app = Window(root)
