@@ -16,10 +16,10 @@ class Window(Frame):
         self.master = master
 
         #with that, we want to then run init_window, which doesn't yet exist
-        self.init_window()
+        self.init_win()
 
     #Creation of init_window
-    def init_window(self):
+    def init_win(self):
 
         # changing the title of our master widget
         self.master.title("GUI")
@@ -37,33 +37,22 @@ class Window(Frame):
         # adds a command to the menu option, calling it exit, and the
         # command it runs on event is client_exit
         file.add_command(label="Exit", command=self.client_exit)
+        file.add_command(label="Repaint", command=self.client_repaint)
 
         #added "file" to our menu
-        menu.add_cascade(label="File", menu=file)
+        menu.add_cascade(label="Menu", menu=file)
 
-        # create the file object)
-        edit = Menu(menu)
-
-        # adds a command to the menu option, calling it exit, and the
-        # command it runs on event is client_exit
-        edit.add_command(label="Undo")
-
-        #added "file" to our menu
-        menu.add_cascade(label="Edit", menu=edit)
-
+        canvas=Canvas(self.master, width=500, height=500)
+        canvas.pack()
+        canvas.create_line(0,0,200,100)
 
     def client_exit(self):
         exit()
+    def client_repaint(self):
+        print("draw")
 
-
-# root window created. Here, that would be the only window, but
-# you can later have windows within windows.
 root = Tk()
-
-root.geometry("400x300")
-
-#creation of an instance
+root.geometry("500x500")
 app = Window(root)
-
 #mainloop
 root.mainloop()
