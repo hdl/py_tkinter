@@ -50,10 +50,10 @@ class Window(Frame):
         exit()
     def client_repaint(self):
         self.canvas.create_line(250, 500, 250, 500-128)
-        self.draw(self.canvas, 250, 500-128, 128*0.8, 90, 4) 
+        self.draw(self.canvas, 250, 500-128, 128*0.8, 90, 10) 
 
     def draw(self, Canvas, x, y, length, direction, depth):
-        print(direction)
+        #print(direction)
         if depth==0: #base case
             return
         end_x = x + length * (math.cos(math.radians(direction+30)))
